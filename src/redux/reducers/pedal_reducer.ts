@@ -28,7 +28,7 @@ const hybridReducer: Reducer<PedalState> = (oldState: PedalState, action: PedalA
     case PedalActions.RELEASE:
     default: {
       return {
-        pedal: Pedals.BREAK_PEDAL,
+        pedal: Pedals.RELEASE,
         throttle: 0,
       }
     }

@@ -1,14 +1,15 @@
 import { Action, Dispatch } from 'redux';
 
 export enum Pedals {
+  RELEASE,
   GAS_PEDAL,
-  BREAK_PEDAL
+  BREAK_PEDAL,
 }
 
 export enum PedalActions {
+  RELEASE = 'RELEASE',
   GAS = 'GAS',
   BREAK = 'BREAK',
-  RELEASE = 'RELEASE'
 }
 
 export type PedalActionTypes = GasAction | BreakAction | ReleaseAction;
