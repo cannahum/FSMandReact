@@ -7,16 +7,30 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "ts-node server.ts"
+    "start": "ts-node server.ts",
+    "build": "webpack"
   },
   "dependencies": {
+    "@types/react": "^16.0.20",
+    "@types/react-dom": "^16.0.2",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "ts-node": "^3.3.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.7",
     "@types/express": "^4.0.39",
+    "@types/react-redux": "^5.0.12",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "awesome-typescript-loader": "^3.3.0",
+    "copy-webpack-plugin": "^4.2.0",
+    "source-map-loader": "^0.2.3",
     "typescript": "^2.6.1"
   }
 }
