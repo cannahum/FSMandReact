@@ -5,11 +5,15 @@ import { Provider } from 'react-redux';
 import configureStore from './redux/store';
 // Components
 import { default as Throttle } from './components/Throttle';
+import { default as Speedometer } from './components/Speedometer'
 
 const store = configureStore();
 render(
   <Provider store={store}>
-    <Throttle />
+    <div>
+      <Throttle />
+      <Speedometer />
+    </div>
   </Provider>,
   document.getElementById('target')
 );

@@ -11,7 +11,7 @@ const initialState: PedalState = {
   pedal: Pedals.BREAK_PEDAL,
 }
 
-const hybridReducer: Reducer<PedalState> = (oldState: PedalState, action: PedalActionTypes): PedalState => {
+const pedalReducer: Reducer<PedalState> = (oldState: PedalState = initialState, action: any): PedalState => {
   switch (action.type) {
     case PedalActions.GAS: {
       return {
@@ -35,4 +35,4 @@ const hybridReducer: Reducer<PedalState> = (oldState: PedalState, action: PedalA
   }
 }
 
-export default hybridReducer;
+export default pedalReducer;
