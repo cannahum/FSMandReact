@@ -4,32 +4,43 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { accelerate, decelerate, changeEngine } from '../redux/actions/velocity_actions';
 import { ReducerMap } from '../redux/reducers'
 import { VelocityState } from '../redux/reducers/velocity_reducer'
+import { Pedals } from '../redux/actions/pedal_actions'
 
 interface SpeedometerProps extends VelocityState {
   accelerate: typeof accelerate;
   decelerate: typeof decelerate;
   changeEngine: typeof changeEngine;
+  throttle: number;
+  pedal: Pedals
 }
 
 class Speedometer extends React.Component<SpeedometerProps, {}> {
-  componentDidMount() {
-    setTimeout(() => {
-      console.log('Do Something Here');
-    }, 300)
-  }
 
   render() {
+    this.changeVelocity();
     return (
       <div>
         Current Velocity {this.props.velocity}
       </div>
     )
   }
+
+  private changeVelocity() {
+    const differential: number = this.props.throttle - this.props.velocity;
+    // FSM???
+    
+  }
 }
 
-type StateProps = VelocityState;
+interface StateProps extends VelocityState {
+  throttle: number;
+  pedal: Pedals
+}
 const mapStateToProps = (state: ReducerMap): StateProps => {
-  return state.velocityReducer;
+  return Object.assign(state.velocityReducer, {
+    throttle: state.pedalReducer.throttle,
+    pedal: state.pedalReducer.pedal
+  });
 }
 
 interface DispatchProps {
