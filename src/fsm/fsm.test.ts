@@ -209,17 +209,20 @@ describe('FSM Events', () => {
     };
 
     let beforeEventFired = false;
-    let onEventFired = false;
+    let afterEventFired = false;
     const events = {
-      beforeTransition2: () => { beforeEventFired = true },
-      onTransition2: () => { onEventFired = true }
+      beforeTransition2: () => {
+        beforeEventFired = true 
+      },
+      onTransition2: () => {     
+        afterEventFired = true
+      }
     }
     const fsm = new FiniteCanMachine('state1', [t1, t2], events);
     fsm.go('transition1');
     expect(fsm.current).to.equal('state2');
-    setTimeout(() => {
-      expect(beforeEventFired).to.be.true;
-      expect(onEventFired).to.be.true;
-    }, 1000);
+    fsm.go('transition2');
+    expect(beforeEventFired).to.be.true;
+    expect(afterEventFired).to.be.true;
   });
 });

@@ -8,6 +8,7 @@ enum TransitionState {
 export enum TransitionErrors {
   INVALID_TRANSITION = 'invalid_transition',
   INVALID_TRANSITION_NAME = 'invalid_transition_name',
+  INVALID_CALLBACK = 'invalid_callback'
 }
 
 export type DeciderFunction = (...args: any[]) => string;
@@ -19,7 +20,7 @@ export interface Transition {
   decider?: DeciderFunction
 }
 
-type EventCallback = (cb: (...args: any[]) => void) => void;
+type EventCallback = (...args: any[]) => void;
 export interface EventCallbacks {
   [index: string]: EventCallback;
 }
@@ -30,7 +31,6 @@ export interface RegisteredEvents {
 
 export interface StateNode {
   name: string;
-  events?: RegisteredEvents;
   decider?: DeciderFunction;
   transitions: {
     [index: string]: StateNode | StateNode[];
@@ -44,6 +44,7 @@ class FiniteCanMachine {
   private transitionNames: Set<string>;
   private currentStateNode: StateNode;
   private stateNodesByName: Map<string, StateNode>;
+  private normalizedEvents: Map<string, EventCallback>;
 
   get directedGraph(): StateNode {
     if (process.env.NODE_ENV === 'test') {
@@ -82,9 +83,21 @@ class FiniteCanMachine {
     this.stateNodesByName = new Map();
     this.stateNames = new Set();
     this.transitionNames = new Set();
+    this.normalizedEvents = new Map();
 
     let wildCardTransition: Transition | null = null;
     let wildCardFromTransitions: Transition[] = [];
+
+    if (registeredEvents && Object.keys(registeredEvents).length > 0) {
+      // Re-organize the registered events to be lower-cased - kind of a normalization.
+      for (let key of Object.keys(registeredEvents)) {
+        const newKey = key.toLowerCase();
+        if (typeof registeredEvents[key] !== 'function') {
+          throw Error(TransitionErrors.INVALID_CALLBACK);
+        }
+        this.normalizedEvents.set(newKey, registeredEvents[key]);
+      }
+    }
     for (const transition of transitions) {
       let { name, from, to, decider } = transition;
       if (name === WILD_CARD) {
@@ -165,7 +178,21 @@ class FiniteCanMachine {
     if (!nextState) {
       throw Error(TransitionErrors.INVALID_TRANSITION);
     }
+    const beforeName = `before${transitionName.toLowerCase()}`;
+    if (this.normalizedEvents.has(beforeName)) {
+      const cb = this.normalizedEvents.get(beforeName);
+      if (cb) {
+        cb();
+      }
+    }
     this.currentStateNode = nextState;
+    const afterName = `on${transitionName.toLowerCase()}`;    
+    if (this.normalizedEvents.has(afterName)) {
+      const cb = this.normalizedEvents.get(afterName);
+      if (cb) {
+        cb();
+      }
+    }
   }
 
   private getStateOrCreate(name: string, decider?: DeciderFunction): StateNode {
