@@ -55,7 +55,6 @@ export function pressTheBreak(throttle: number): any {
 
 export function releasePedals(): any {
   return (dispatch: Dispatch<ReducerMap>) => {
-    dispatch(emitRelease());
     dispatch({
       type: PedalActions.RELEASE
     });

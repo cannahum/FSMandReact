@@ -16,7 +16,7 @@ enum FSMTransitionNames {
   RELEASE = 'release'
 }
 
-const GAS_TAKEOVER_VELOCITY = 50;
+export const GAS_TAKEOVER_VELOCITY = 30;
 
 const acc1: Transition = {
   from: FSMStates.EV,

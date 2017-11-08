@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from 'redux';
 import { accelerate, decelerate, changeEngine } from '../redux/actions/velocity_actions';
-import { emitAcceleration, emitDeceleration } from '../redux/actions/engine_actions';
+import { emitAcceleration, emitDeceleration, GAS_TAKEOVER_VELOCITY } from '../redux/actions/engine_actions';
 import { ReducerMap } from '../redux/reducers'
 import { VelocityState } from '../redux/reducers/velocity_reducer'
 import { Pedals } from '../redux/actions/pedal_actions'
@@ -20,6 +20,15 @@ interface SpeedometerProps extends VelocityState {
 }
 
 class Speedometer extends React.Component<SpeedometerProps, {}> {
+
+  componentWillReceiveProps(nextProps: SpeedometerProps) {
+    if (this.props.velocity <= GAS_TAKEOVER_VELOCITY && nextProps.velocity > GAS_TAKEOVER_VELOCITY) {
+      this.props.emitAcceleration(nextProps.velocity);
+    }
+    if (this.props.velocity > GAS_TAKEOVER_VELOCITY && nextProps.velocity <= GAS_TAKEOVER_VELOCITY) {
+      this.props.emitDeceleration(nextProps.velocity);
+    }
+  }
 
   componentDidUpdate() {
     this.changeVelocity();
