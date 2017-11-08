@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ReducerMap>): DispatchProps => {
 
 const styles: any = {
   container: {
-    width: '40%'
+    minWidth: 350
   }
 }
 

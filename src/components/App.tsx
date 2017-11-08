@@ -13,7 +13,7 @@ interface AppProps {
 const App = (props: AppProps): any => {
   const { children } = props;
   return (
-    <div>
+    <div style={styles.container}>
       <AppBar
         title="Can Nahum"
         iconElementLeft={<IconButton></IconButton>}
@@ -51,14 +51,18 @@ const styles: any = {
   iconRight: {
     color: 'white'
   },
+  container: {
+    display: 'flow-root'
+  },
   appContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: '10px',
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap-reverse',
+    paddingTop: '10px',
     background: 'beige',
     width: '100%',
-    height: '100%',
+    height: '100%'
   }
 }
 
