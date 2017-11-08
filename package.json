@@ -2,6 +2,7 @@
   "name": "IntuitFSM",
   "version": "1.0.0",
   "description": "Finite State Machine Library & Front-End Demo",
+  "homepage": "https://cannahum.github.io/FSMandReact",
   "main": "index.js",
   "author": "Can Nahum",
   "license": "MIT",
@@ -9,7 +10,9 @@
   "scripts": {
     "start": "ts-node server.ts",
     "test": "export NODE_ENV=test && mocha -r ts-node/register src/**/*.test.ts",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm install && npm run build",
+    "deploy": "gh-pages -d client"
   },
   "dependencies": {
     "@types/react": "^16.0.20",
@@ -29,6 +32,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.16.7",
     "@types/chai": "^4.0.4",
+    "gh-pages": "^1.0.0",
     "@types/express": "^4.0.39",
     "@types/material-ui": "^0.18.4",
     "@types/mocha": "^2.2.44",
