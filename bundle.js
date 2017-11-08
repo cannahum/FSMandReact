@@ -2359,12 +2359,12 @@ var FSMTransitionNames;
     FSMTransitionNames["BR"] = "break";
     FSMTransitionNames["RELEASE"] = "release";
 })(FSMTransitionNames || (FSMTransitionNames = {}));
-const GAS_TAKEOVER_VELOCITY = 50;
+exports.GAS_TAKEOVER_VELOCITY = 30;
 const acc1 = {
     from: FSMStates.EV,
     to: [FSMStates.EV, FSMStates.GAS],
     name: FSMTransitionNames.ACC,
-    decider: ((vel) => vel > GAS_TAKEOVER_VELOCITY ? FSMStates.GAS : FSMStates.EV)
+    decider: ((vel) => vel > exports.GAS_TAKEOVER_VELOCITY ? FSMStates.GAS : FSMStates.EV)
 };
 const acc2 = {
     from: FSMStates.GAS,
@@ -2380,7 +2380,7 @@ const dec1 = {
     from: FSMStates.GAS,
     to: [FSMStates.EV, FSMStates.GAS],
     name: FSMTransitionNames.DEC,
-    decider: ((vel) => vel > GAS_TAKEOVER_VELOCITY ? FSMStates.GAS : FSMStates.EV)
+    decider: ((vel) => vel > exports.GAS_TAKEOVER_VELOCITY ? FSMStates.GAS : FSMStates.EV)
 };
 const dec2 = {
     from: FSMStates.EV,
@@ -4412,7 +4412,6 @@ function pressTheBreak(throttle) {
 exports.pressTheBreak = pressTheBreak;
 function releasePedals() {
     return (dispatch) => {
-        dispatch(engine_actions_1.emitRelease());
         dispatch({
             type: PedalActions.RELEASE
         });
@@ -38996,6 +38995,14 @@ const pedal_actions_1 = __webpack_require__(101);
 const Engine_1 = __webpack_require__(379);
 const ReactSpeedometer = __webpack_require__(380).default;
 class Speedometer extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.velocity <= engine_actions_1.GAS_TAKEOVER_VELOCITY && nextProps.velocity > engine_actions_1.GAS_TAKEOVER_VELOCITY) {
+            this.props.emitAcceleration(nextProps.velocity);
+        }
+        if (this.props.velocity > engine_actions_1.GAS_TAKEOVER_VELOCITY && nextProps.velocity <= engine_actions_1.GAS_TAKEOVER_VELOCITY) {
+            this.props.emitDeceleration(nextProps.velocity);
+        }
+    }
     componentDidUpdate() {
         this.changeVelocity();
     }
