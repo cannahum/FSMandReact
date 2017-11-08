@@ -25,12 +25,14 @@ const pedalReducer: Reducer<PedalState> = (oldState: PedalState = initialState, 
         throttle: action.throttle,
       }
     }
-    case PedalActions.RELEASE:
-    default: {
+    case PedalActions.RELEASE: {
       return {
         pedal: Pedals.RELEASE,
-        throttle: 0,
+        throttle: 0
       }
+    }
+    default: {
+      return oldState;
     }
   }
 }

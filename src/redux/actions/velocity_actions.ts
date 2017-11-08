@@ -15,6 +15,7 @@ interface AccelerateAction extends Action {
 interface DecelerateAction extends Action {
   readonly type: VelocityActions.DECELERATE;
   delta: number;
+  fullStop: boolean;
 }
 
 interface EnginePowerChange extends Action {
@@ -29,10 +30,11 @@ export function accelerate(): AccelerateAction {
   }
 }
 
-export function decelerate(): DecelerateAction {
+export function decelerate(fullStop: boolean = false): DecelerateAction {
   return {
     type: VelocityActions.DECELERATE,
-    delta: 1
+    delta: 1,
+    fullStop
   }
 }
 

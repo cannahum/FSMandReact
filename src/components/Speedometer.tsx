@@ -16,8 +16,11 @@ interface SpeedometerProps extends VelocityState {
 
 class Speedometer extends React.Component<SpeedometerProps, {}> {
 
-  render() {
+  componentDidUpdate() {
     this.changeVelocity();
+  }
+
+  render() {
     return (
       <div>
         Current Velocity {this.props.velocity}
@@ -26,9 +29,21 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
   }
 
   private changeVelocity() {
-    const differential: number = this.props.throttle - this.props.velocity;
-    // FSM???
-    
+    if (this.props.pedal !== Pedals.BREAK_PEDAL) {
+      const differential: number = this.props.throttle - this.props.velocity;
+      // FSM???
+      if (differential > 0) {
+        setTimeout(() => {
+          this.props.accelerate();
+        }, 500);
+      } else if (differential < 0) {
+        setTimeout(() => {
+          this.props.decelerate();
+        }, 500);
+      }
+    } else {
+      this.props.decelerate(true);
+    }
   }
 }
 
@@ -37,10 +52,12 @@ interface StateProps extends VelocityState {
   pedal: Pedals
 }
 const mapStateToProps = (state: ReducerMap): StateProps => {
-  return Object.assign(state.velocityReducer, {
+  return {
+    velocity: state.velocityReducer.velocity,
+    enginePowerFactor: state.velocityReducer.enginePowerFactor,
     throttle: state.pedalReducer.throttle,
     pedal: state.pedalReducer.pedal
-  });
+  };
 }
 
 interface DispatchProps {
