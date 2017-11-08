@@ -28,7 +28,7 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
   render() {
     return (
       <div style={styles.container}>
-        <div>
+        <div style={styles.speedometer}>
           <ReactSpeedometer
             value={this.props.velocity}
             minValue={0}
@@ -93,8 +93,13 @@ const styles: any = {
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%'
+    justifyContent: 'space-around',
+    minWidth: 700,
+    maxWidth: 900,
+    maxHeight: 450
+  },
+  speedometer: {
+    minWidth: 450,
   }
 }
 
