@@ -7,6 +7,7 @@ import { ReducerMap } from '../redux/reducers'
 import { VelocityState } from '../redux/reducers/velocity_reducer'
 import { Pedals } from '../redux/actions/pedal_actions'
 import Engine from './Engine';
+const ReactSpeedometer = require('react-d3-speedometer').default;
 
 interface SpeedometerProps extends VelocityState {
   accelerate: typeof accelerate;
@@ -26,8 +27,16 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
 
   render() {
     return (
-      <div>
-        Current Velocity {this.props.velocity}
+      <div style={styles.container}>
+        <div>
+          <ReactSpeedometer
+            value={this.props.velocity}
+            minValue={0}
+            maxValue={100}
+            width={400}
+            height={400}
+          />
+        </div>
         <Engine engineMode={this.props.engineMode} />
       </div>
     )
@@ -77,6 +86,15 @@ const mapDispatchToProps = (dispatch: Dispatch<ReducerMap>): DispatchProps => {
     changeEngine: bindActionCreators(changeEngine, dispatch),
     emitAcceleration: bindActionCreators(emitAcceleration, dispatch),
     emitDeceleration: bindActionCreators(emitDeceleration, dispatch),
+  }
+}
+
+const styles: any = {
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%'
   }
 }
 

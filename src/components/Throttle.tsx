@@ -16,7 +16,7 @@ interface ThrottleProps {
 class Throttle extends React.Component<ThrottleProps, {}> {
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <h3>Current Pedal: {this.props.pedal}</h3>
         <h4>Throttle: {this.props.throttle}</h4>
         <button onClick={() => this.onClick(Pedals.GAS_PEDAL)}>
@@ -72,6 +72,12 @@ const mapDispatchToProps = (dispatch: Dispatch<ReducerMap>): DispatchProps => {
     pressTheGas: bindActionCreators(pressTheGas, dispatch),
     pressTheBreak: bindActionCreators(pressTheBreak, dispatch),
     releasePedals: bindActionCreators(releasePedals, dispatch)
+  }
+}
+
+const styles: any = {
+  container: {
+    width: '40%'
   }
 }
 
