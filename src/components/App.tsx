@@ -77,9 +77,9 @@ const styles: any = {
   },
   appContainer: {
     display: 'flex',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-around',
-    flexWrap: 'wrap-reverse',
+    flexWrap: 'wrap',
     paddingTop: '10px',
     background: 'beige',
     width: '100%',

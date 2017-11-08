@@ -101,7 +101,7 @@ class Engine extends React.Component<EngineProps, {}> {
         style={style}
         key={key}
         zDepth={z}>
-        <h1>{`${engine}: ${driving}`}</h1>
+        <h2>{`${engine}: ${driving}`}</h2>
       </Paper>
     )
   }

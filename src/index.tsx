@@ -18,8 +18,8 @@ render(
   <MuiThemeProvider>
     <Provider store={store}>
       <App>
-        <Throttle />
         <Speedometer />
+        <Throttle />
       </App>
     </Provider>
   </MuiThemeProvider>,
