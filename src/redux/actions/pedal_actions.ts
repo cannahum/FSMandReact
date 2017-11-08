@@ -1,6 +1,6 @@
 import { Action, Dispatch } from 'redux';
 import { ReducerMap } from '../reducers'
-import { emitBreak, emitRelease } from './engine_actions';
+import { emitAcceleration, emitBreak, emitRelease } from './engine_actions';
 
 export enum Pedals {
   RELEASE,
@@ -31,11 +31,14 @@ interface ReleaseAction extends Action {
   readonly type: PedalActions.RELEASE;
 }
 
-export function pressTheGas(throttle: number): GasAction {
-  return {
-    type: PedalActions.GAS,
-    pedal: Pedals.GAS_PEDAL,
-    throttle
+export function pressTheGas(throttle: number): any {
+  return (dispatch: Dispatch<ReducerMap>) => {
+    dispatch(emitAcceleration(throttle));
+    dispatch({
+      type: PedalActions.GAS,
+      pedal: Pedals.GAS_PEDAL,
+      throttle
+    });
   }
 }
 

@@ -38,15 +38,9 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
       const differential: number = this.props.throttle - this.props.velocity;
       // FSM???
       if (differential > 0) {
-        
-          this.props.emitAcceleration(this.props.throttle);
-          this.props.accelerate();
-
+        this.props.accelerate();
       } else if (differential < 0) {
-
-          this.props.emitDeceleration(this.props.throttle);
-          this.props.decelerate();
-
+        this.props.decelerate();
       }
     } else {
       this.props.decelerate(true);

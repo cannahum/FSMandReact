@@ -52,7 +52,7 @@ const charge: Transition = {
   name: FSMTransitionNames.BR
 };
 const release: Transition = {
-  from: FSMStates.CHARGING,
+  from: '*',
   to: FSMStates.EV,
   name: FSMTransitionNames.RELEASE
 }

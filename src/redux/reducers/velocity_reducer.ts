@@ -18,12 +18,12 @@ const velocityReducer: Reducer<VelocityState> = (oldState: VelocityState = initi
   switch (action.type) {
     case VelocityActions.ACCELERATE: {
       return Object.assign({}, oldState, {
-        velocity: oldState.velocity + (action.delta * oldState.enginePowerFactor)
+        velocity: Math.min(100, oldState.velocity + (action.delta * oldState.enginePowerFactor))
       });
     }
     case VelocityActions.DECELERATE: {
       return Object.assign({}, oldState, {
-        velocity: action.fullStop === true ? 0 : oldState.velocity - (action.delta * oldState.enginePowerFactor)
+        velocity: Math.max(0, action.fullStop === true ? 0 : oldState.velocity - (action.delta * oldState.enginePowerFactor))
       });
     }
     case VelocityActions.ENGINE: {

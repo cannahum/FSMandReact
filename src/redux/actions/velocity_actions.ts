@@ -57,23 +57,17 @@ export function accelerate(): any {
 }
 
 export function decelerate(fullStop: boolean = false): any | DecelerateAction {
-  if (fullStop) {
-    return {
-      type: VelocityActions.DECELERATE,
-      delta: 1,
-      fullStop
-    }
-  } else {
-    return (dispatch: Dispatch<ReducerMap>) => {
-      setTimeout(() => {
-        dispatch({
-          type: VelocityActions.DECELERATE,
-          delta: 1
-        });
-      }, 300);
-    }
+  return (dispatch: Dispatch<ReducerMap>) => {
+    setTimeout(() => {
+      dispatch({
+        type: VelocityActions.DECELERATE,
+        delta: 1,
+        fullStop
+      });
+    }, 300);
   }
 }
+
 
 export function changeEngine(engine: EngineMode): EnginePowerChange {
   return {
