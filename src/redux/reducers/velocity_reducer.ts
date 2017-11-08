@@ -1,4 +1,5 @@
-import { VelocityActionTypes, VelocityActions } from '../actions/velocity_actions';
+import { VelocityActionTypes, VelocityActions, GAS_ENGINE_POWER } from '../actions/velocity_actions';
+import { EngineMode, EngineActionTypes } from '../actions/engine_actions';
 import { Reducer } from 'redux';
 
 export interface VelocityState {
@@ -8,7 +9,7 @@ export interface VelocityState {
 
 const initialState: VelocityState = {
   velocity: 0,
-  enginePowerFactor: 1
+  enginePowerFactor: GAS_ENGINE_POWER
 }
 
 const velocityReducer: Reducer<VelocityState> = (oldState: VelocityState = initialState, action: any): VelocityState => {

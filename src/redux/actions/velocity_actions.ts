@@ -1,4 +1,5 @@
 import { Action, Dispatch } from 'redux';
+import { EngineMode } from './engine_actions';
 
 export enum VelocityActions {
   ACCELERATE = 'ACCELERATE',
@@ -23,6 +24,25 @@ interface EnginePowerChange extends Action {
   newFactor: number;
 }
 
+export const GAS_ENGINE_POWER = 2;
+export const EV_ENGINE_POWER = 1;
+
+const getEnginePowerFromEngineMode = (engineMode: EngineMode): 1 | 2 => {
+  switch (engineMode) {
+    case EngineMode.CHARGING:
+    case EngineMode.EV: {
+      return EV_ENGINE_POWER;
+    }
+    case EngineMode.GAS: {
+      return GAS_ENGINE_POWER;
+    }
+    default: {
+      throw Error('Unknown Engine Mode: ' + engineMode);
+    }
+  }
+}
+
+
 export function accelerate(): AccelerateAction {
   return {
     type: VelocityActions.ACCELERATE,
@@ -38,9 +58,9 @@ export function decelerate(fullStop: boolean = false): DecelerateAction {
   }
 }
 
-export function changeEngine(newFactor: number): EnginePowerChange {
+export function changeEngine(engine: EngineMode): EnginePowerChange {
   return {
     type: VelocityActions.ENGINE,
-    newFactor
+    newFactor: getEnginePowerFromEngineMode(engine)
   }
 }

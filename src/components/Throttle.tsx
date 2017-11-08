@@ -14,11 +14,6 @@ interface ThrottleProps {
 }
 
 class Throttle extends React.Component<ThrottleProps, {}> {
-  // constructor(props: ThrottleProps) {
-  //   super(props);
-  //   this.onClick = this.onClick.bind(this);
-  // }
-
   render() {
     return (
       <div>

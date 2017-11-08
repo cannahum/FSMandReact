@@ -35,11 +35,11 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
       if (differential > 0) {
         setTimeout(() => {
           this.props.accelerate();
-        }, 500);
+        }, 200);
       } else if (differential < 0) {
         setTimeout(() => {
           this.props.decelerate();
-        }, 500);
+        }, 200);
       }
     } else {
       this.props.decelerate(true);

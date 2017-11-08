@@ -107,8 +107,8 @@ class FiniteCanMachine {
       if (!name && name !== '') {
         throw Error(TransitionErrors.INVALID_TRANSITION_NAME + ', ' + name);
       }
-      if (!from || from === null) {
-        from = '*';
+      if (from === WILD_CARD || !from || from === null) {
+        from = WILD_CARD;
         wildCardFromTransitions.push(transition);
         continue;
       }
@@ -186,7 +186,7 @@ class FiniteCanMachine {
       }
     }
     this.currentStateNode = nextState;
-    const afterName = `on${transitionName.toLowerCase()}`;    
+    const afterName = `on${transitionName.toLowerCase()}`;
     if (this.normalizedEvents.has(afterName)) {
       const cb = this.normalizedEvents.get(afterName);
       if (cb) {
@@ -212,9 +212,7 @@ class FiniteCanMachine {
 
   private registerWildCardTransition(t: Transition, type: 'from' | 'transitionName'): void {
     const { name, from, to, decider } = t;
-    if (type === 'transitionName') {
-      this.transitionNames.add(name);
-    }
+    this.transitionNames.add(name);
     if (typeof to !== 'string') {
       throw Error(TransitionErrors.INVALID_TRANSITION_NAME + ': Wild Card Transitions can take only one TO parameter');
     }
