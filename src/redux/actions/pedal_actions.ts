@@ -42,19 +42,19 @@ export function pressTheGas(throttle: number): GasAction {
 export function pressTheBreak(throttle: number): any {
   return (dispatch: Dispatch<ReducerMap>) => {
     dispatch(emitBreak());
-    return {
+    dispatch({
       type: PedalActions.BREAK,
       pedal: Pedals.BREAK_PEDAL,
       throttle
-    }
+    });
   }
 }
 
 export function releasePedals(): any {
   return (dispatch: Dispatch<ReducerMap>) => {
     dispatch(emitRelease());
-    return {
+    dispatch({
       type: PedalActions.RELEASE
-    }
+    });
   }
 }

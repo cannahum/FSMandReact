@@ -3,7 +3,7 @@ import { changeEngine, VelocityActions } from './velocity_actions';
 import { ReducerMap } from '../reducers'
 import FiniteCanMachine, { Transition, DeciderFunction } from '../../fsm';
 
-enum FSMStates {
+export enum FSMStates {
   CHARGING = 'charging',
   EV = 'electric',
   GAS = 'gas'

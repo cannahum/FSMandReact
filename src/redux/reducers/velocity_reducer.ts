@@ -5,11 +5,13 @@ import { Reducer } from 'redux';
 export interface VelocityState {
   velocity: number;
   enginePowerFactor: number;
+  engineMode: EngineMode;
 }
 
 const initialState: VelocityState = {
   velocity: 0,
-  enginePowerFactor: GAS_ENGINE_POWER
+  enginePowerFactor: GAS_ENGINE_POWER,
+  engineMode: EngineMode.CHARGING
 }
 
 const velocityReducer: Reducer<VelocityState> = (oldState: VelocityState = initialState, action: any): VelocityState => {
@@ -26,7 +28,8 @@ const velocityReducer: Reducer<VelocityState> = (oldState: VelocityState = initi
     }
     case VelocityActions.ENGINE: {
       return Object.assign({}, oldState, {
-        enginePowerFactor: action.newFactor
+        enginePowerFactor: action.newFactor,
+        engineMode: action.engineMode,
       });
     }
     default: {

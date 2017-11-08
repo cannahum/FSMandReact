@@ -22,6 +22,7 @@ interface DecelerateAction extends Action {
 interface EnginePowerChange extends Action {
   readonly type: VelocityActions.ENGINE;
   newFactor: number;
+  engineMode: EngineMode;
 }
 
 export const GAS_ENGINE_POWER = 2;
@@ -61,6 +62,7 @@ export function decelerate(fullStop: boolean = false): DecelerateAction {
 export function changeEngine(engine: EngineMode): EnginePowerChange {
   return {
     type: VelocityActions.ENGINE,
+    engineMode: engine,
     newFactor: getEnginePowerFromEngineMode(engine)
   }
 }

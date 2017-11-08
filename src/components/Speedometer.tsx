@@ -5,6 +5,7 @@ import { accelerate, decelerate, changeEngine } from '../redux/actions/velocity_
 import { ReducerMap } from '../redux/reducers'
 import { VelocityState } from '../redux/reducers/velocity_reducer'
 import { Pedals } from '../redux/actions/pedal_actions'
+import Engine from './Engine';
 
 interface SpeedometerProps extends VelocityState {
   accelerate: typeof accelerate;
@@ -24,6 +25,7 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
     return (
       <div>
         Current Velocity {this.props.velocity}
+        <Engine engineMode={this.props.engineMode} />
       </div>
     )
   }
@@ -56,7 +58,8 @@ const mapStateToProps = (state: ReducerMap): StateProps => {
     velocity: state.velocityReducer.velocity,
     enginePowerFactor: state.velocityReducer.enginePowerFactor,
     throttle: state.pedalReducer.throttle,
-    pedal: state.pedalReducer.pedal
+    pedal: state.pedalReducer.pedal,
+    engineMode: state.velocityReducer.engineMode
   };
 }
 
