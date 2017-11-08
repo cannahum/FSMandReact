@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from 'redux';
 import { accelerate, decelerate, changeEngine } from '../redux/actions/velocity_actions';
+import { emitAcceleration, emitDeceleration } from '../redux/actions/engine_actions';
 import { ReducerMap } from '../redux/reducers'
 import { VelocityState } from '../redux/reducers/velocity_reducer'
 import { Pedals } from '../redux/actions/pedal_actions'
@@ -11,6 +12,8 @@ interface SpeedometerProps extends VelocityState {
   accelerate: typeof accelerate;
   decelerate: typeof decelerate;
   changeEngine: typeof changeEngine;
+  emitAcceleration: typeof emitAcceleration;
+  emitDeceleration: typeof emitDeceleration;
   throttle: number;
   pedal: Pedals
 }
@@ -35,13 +38,15 @@ class Speedometer extends React.Component<SpeedometerProps, {}> {
       const differential: number = this.props.throttle - this.props.velocity;
       // FSM???
       if (differential > 0) {
-        setTimeout(() => {
+        
+          this.props.emitAcceleration(this.props.throttle);
           this.props.accelerate();
-        }, 200);
+
       } else if (differential < 0) {
-        setTimeout(() => {
+
+          this.props.emitDeceleration(this.props.throttle);
           this.props.decelerate();
-        }, 200);
+
       }
     } else {
       this.props.decelerate(true);
@@ -67,13 +72,17 @@ interface DispatchProps {
   accelerate: typeof accelerate;
   decelerate: typeof decelerate;
   changeEngine: typeof changeEngine;
+  emitAcceleration: typeof emitAcceleration;
+  emitDeceleration: typeof emitDeceleration;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<ReducerMap>): DispatchProps => {
   return {
     accelerate: bindActionCreators(accelerate, dispatch),
     decelerate: bindActionCreators(decelerate, dispatch),
-    changeEngine: bindActionCreators(changeEngine, dispatch)
+    changeEngine: bindActionCreators(changeEngine, dispatch),
+    emitAcceleration: bindActionCreators(emitAcceleration, dispatch),
+    emitDeceleration: bindActionCreators(emitDeceleration, dispatch),
   }
 }
 

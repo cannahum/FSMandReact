@@ -1,5 +1,6 @@
 import { Action, Dispatch } from 'redux';
 import { EngineMode } from './engine_actions';
+import { ReducerMap } from '../reducers'
 
 export enum VelocityActions {
   ACCELERATE = 'ACCELERATE',
@@ -44,18 +45,33 @@ const getEnginePowerFromEngineMode = (engineMode: EngineMode): 1 | 2 => {
 }
 
 
-export function accelerate(): AccelerateAction {
-  return {
-    type: VelocityActions.ACCELERATE,
-    delta: 1
+export function accelerate(): any {
+  return (dispatch: Dispatch<ReducerMap>) => {
+    setTimeout(() => {
+      dispatch({
+        type: VelocityActions.ACCELERATE,
+        delta: 1
+      });
+    }, 300);
   }
 }
 
-export function decelerate(fullStop: boolean = false): DecelerateAction {
-  return {
-    type: VelocityActions.DECELERATE,
-    delta: 1,
-    fullStop
+export function decelerate(fullStop: boolean = false): any | DecelerateAction {
+  if (fullStop) {
+    return {
+      type: VelocityActions.DECELERATE,
+      delta: 1,
+      fullStop
+    }
+  } else {
+    return (dispatch: Dispatch<ReducerMap>) => {
+      setTimeout(() => {
+        dispatch({
+          type: VelocityActions.DECELERATE,
+          delta: 1
+        });
+      }, 300);
+    }
   }
 }
 
