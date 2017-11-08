@@ -23,6 +23,9 @@ const config = {
     new CopyWebpackPlugin([
       {
         from: 'src/index.html'
+      },
+      {
+        from: 'assets'
       }
     ])
   ]

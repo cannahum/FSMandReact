@@ -75,8 +75,9 @@ class Engine extends React.Component<EngineProps, {}> {
 
   getPaper(preset: Preset, currentDriving: string, currentEngine: string, key: number): JSX.Element {
     const style = {
-      height: 100,
+      height: 75,
       minWidth: 250,
+      width: '90%',
       margin: 3,
       textAlign: 'center',
       display: 'inline-block',
@@ -111,7 +112,7 @@ const styles: any = {
   container: {
     display: 'block',
     textAlign: 'center'
-  }
+  },
 }
 
 export default Engine;

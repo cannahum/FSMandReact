@@ -95,10 +95,11 @@ const styles: any = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     minWidth: 700,
-    maxWidth: 900
+    maxWidth: 900,
+    maxHeight: 450
   },
   speedometer: {
-    minWidth: 450
+    minWidth: 450,
   }
 }
 
